@@ -9,6 +9,9 @@ using RestaurantTimBaig.Models;
 
 namespace RestaurantTimBaig.Controllers
 {
+    /// <summary>
+    /// Главная страница
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
