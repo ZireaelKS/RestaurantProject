@@ -5,26 +5,21 @@ using System.Threading.Tasks;
 
 namespace RestaurantTimBaig.Models
 {
-    public class Restaurant
+    public class RestaurantViewModel
     {
-        /// <summary>
-        /// Идентификатор ресторана
-        /// </summary>
-        public int IdRest { get; set; } = 1;
-
         /// <summary>
         /// Название ресторана
         /// </summary>
-        public string NameRest { get; set; } = "Ksenia";
+        public string NameRest { get; set; }
 
         /// <summary>
         /// Местонахождение ресторана
         /// </summary>
-        public string AddressRest { get; set; } = "Yablochkova";
+        public string AddressRest { get; set; }
 
         /// <summary>
         /// Номер телефона ресторана
         /// </summary>
-        public string PhoneRest { get; set; } = "89684521364";
+        public string PhoneRest { get; set; }
     }
 }

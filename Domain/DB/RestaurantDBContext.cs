@@ -31,7 +31,7 @@ namespace RestaurantTimBaig.Domain.DB
         /// <summary>
         /// Сотрудники
         /// </summary>
-        public DbSet<Restaurant> Employee { get; private set; }
+        public DbSet<Restaurant> Restaurants { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)

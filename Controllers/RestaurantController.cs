@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RestaurantTimBaig.Domain.DB;
+using RestaurantTimBaig.Domain.Model.Common;
 using RestaurantTimBaig.Models;
-using RestaurantTimBaig.Services.RestaurantService;
 
 namespace RestaurantTimBaig.Controllers
 {
@@ -14,32 +16,48 @@ namespace RestaurantTimBaig.Controllers
     public class RestaurantController : ControllerBase
     {
 
-        private readonly IRestaurantService _restaurantService;
+        private readonly RestaurantDBContext _restaurantDBContext;
 
-        public RestaurantController(IRestaurantService restaurantService)
+        public RestaurantController(RestaurantDBContext restaurantDBContext)
         {
-            _restaurantService = restaurantService;
+            _restaurantDBContext = restaurantDBContext ?? throw new ArgumentNullException(nameof(restaurantDBContext));
         }
 
         /// <summary>
         /// Вывод списка ресторанов
         /// </summary>
         /// <returns></returns>
-        [HttpGet("getAll")]
-        public async Task<IActionResult> Get()
+        ///[HttpGet]
+        public IActionResult Get()
         {
-            return Ok(await _restaurantService.GetAllRestaurants());
+            var restaurants = _restaurantDBContext.Restaurants
+                .Select(x => new RestaurantViewModel
+                {
+                    NameRest = x.RestName,
+                    AddressRest = x.RestAddress,
+                    PhoneRest = x.RestPhone,
+                }).OrderByDescending(x => x.NameRest);
+                
+            return Ok(restaurants);
         }
 
         /// <summary>
-        /// Вывод ресторана по id
+        /// Вывод ресторана по id (пока не юзабельно)
         /// </summary>
         /// <param name="idRest"></param>
         /// <returns></returns>
         [HttpGet("{idRest}")]
-        public async Task<IActionResult> GetRest(int idRest)
+        public IActionResult GetRest(int idRest)
         {
-            return Ok(await _restaurantService.GetRestaurantById(idRest));
+            var restaurants = _restaurantDBContext.Restaurants
+                .Select(x => new RestaurantViewModel
+                {
+                    NameRest = x.RestName,
+                    AddressRest = x.RestAddress,
+                    PhoneRest = x.RestPhone,
+                }).OrderByDescending(x => x.NameRest);
+
+            return Ok(idRest);
         }
 
         /// <summary>
@@ -48,9 +66,52 @@ namespace RestaurantTimBaig.Controllers
         /// <param name="newRest"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddRest(Restaurant newRest)
+        public IActionResult AddRestaurant(Restaurant data)
         {
-            return Ok(await _restaurantService.AddRestaurant(newRest));
+            var rest = new Restaurant
+            {
+                RestName = data.RestName,
+                RestAddress = data.RestAddress,
+                RestPhone = data.RestPhone
+            };
+            _restaurantDBContext.Restaurants.Add(rest);
+            _restaurantDBContext.SaveChanges();
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Удаление ресторана из списка
+        /// </summary>
+        /// <param name="id">Идентификатор ресторана</param>
+        [HttpDelete("{id}/delete")]
+        public IActionResult DeleteRestaurant(int id)
+        {
+            Restaurant rest = _restaurantDBContext.Restaurants.Find(id);
+            try
+            {
+                _restaurantDBContext.Remove(rest);
+                _restaurantDBContext.SaveChanges();
+            }
+            catch
+            {
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Изменение данных ресторана (не работает, пока)
+        /// </summary>
+        /// <param name="rest"></param>
+        /// <returns></returns>
+        [HttpPost("updata")]
+        public ActionResult EditBook(Restaurant rest)
+        {
+            _restaurantDBContext.Entry(rest).State = EntityState.Modified;
+            _restaurantDBContext.SaveChanges();
+            return Ok();
         }
     }
 }

@@ -16,6 +16,6 @@ namespace RestaurantTimBaig.Domain.Model.Common
         /// <summary>
         /// Идентификатор сущности
         /// </summary>
-        public virtual long Id { get; set; }
+        public virtual int Id { get; set; }
     }
 }

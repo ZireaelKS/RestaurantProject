@@ -12,7 +12,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestaurantTimBaig.Domain.DB;
 using RestaurantTimBaig.Domain.Model;
-using RestaurantTimBaig.Services.RestaurantService;
 
 namespace RestaurantTimBaig
 {
@@ -29,7 +28,6 @@ namespace RestaurantTimBaig
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddScoped<IRestaurantService, RestaurantService>();
             services.AddDbContext<RestaurantDBContext>(options =>
                 options.UseNpgsql("Username=ksenia; Database=RestaurantTimBaig; Password=ksenia; Host=localhost"));
             services.AddIdentity<User, IdentityRole<int>>(options =>
