@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RestaurantTimBaig.Domain.Model;
 using RestaurantTimBaig.Domain.Model.Common;
 
@@ -97,7 +96,7 @@ namespace RestaurantTimBaig.Domain.DB
             {
                 com.ToTable("Comments");
                 com.HasOne(com => com.Restaurant).WithMany(rest => rest.Comments).OnDelete(DeleteBehavior.Cascade);
-                com.HasOne(com => com.Employee).WithOne();
+                com.HasOne(com => com.Employee);
             });
             
             #endregion
@@ -106,21 +105,7 @@ namespace RestaurantTimBaig.Domain.DB
             modelBuilder.Entity<Dish>(dish =>
             {
                 dish.ToTable("Dishes");
-                dish.Property(dish => dish.Restaurant)
-                    .HasColumnName("IdRestaurant")
-                    .IsRequired();
-                dish.Property(dish => dish.Type)
-                    .HasColumnName("Type")
-                    .IsRequired();
-                dish.Property(dish => dish.NameDish)
-                    .HasColumnName("NameDish")
-                    .IsRequired();
-                dish.Property(dish => dish.CookingTime)
-                    .HasColumnName("CookingTime");
-                dish.Property(dish => dish.Composition)
-                    .HasColumnName("Composition")
-                    .IsRequired();
-                /*dish.HasOne(dish => dish.Restaurant).WithMany(rest => rest.Dishes).OnDelete(DeleteBehavior.Cascade);*/
+                dish.HasOne(dish => dish.Restaurant).WithMany(rest => rest.Dishes).OnDelete(DeleteBehavior.Cascade);
             });
 
             #endregion
@@ -129,24 +114,6 @@ namespace RestaurantTimBaig.Domain.DB
             modelBuilder.Entity<Reservation>(reserv =>
             {
                 reserv.ToTable("Reservations");
-                reserv.Property(reserv => reserv.NumberReservation)
-                    .HasColumnName("NumberReservation")
-                    .IsRequired();
-                reserv.Property(reserv => reserv.Restaurant)
-                    .HasColumnName("Restaurant")
-                    .IsRequired();
-                reserv.Property(reserv => reserv.Employee)
-                    .HasColumnName("Employee")
-                    .IsRequired();
-                reserv.Property(reserv => reserv.TableRestaurant)
-                    .HasColumnName("TableRestaurant")
-                    .IsRequired();
-                reserv.Property(reserv => reserv.TimeReservation)
-                    .HasColumnName("TimeReservation")
-                    .IsRequired();
-                reserv.Property(reserv => reserv.DateReservation)
-                    .HasColumnName("DateReservation")
-                    .IsRequired();
                 reserv.HasOne(reserv => reserv.Restaurant).WithMany(rest => rest.Reservations).OnDelete(DeleteBehavior.Cascade);
                 reserv.HasOne(reserv => reserv.Employee).WithMany(emp => emp.Reservations).OnDelete(DeleteBehavior.Cascade);
             });
@@ -157,15 +124,6 @@ namespace RestaurantTimBaig.Domain.DB
             modelBuilder.Entity<TableRestaurant>(table =>
             {
                 table.ToTable("TablesRestaurant");
-                table.Property(table => table.Restaurant)
-                    .HasColumnName("IdRestaurant")
-                    .IsRequired();
-                table.Property(table => table.NumberTable)
-                    .HasColumnName("NumberTable")
-                    .IsRequired();
-                table.Property(table => table.Status)
-                    .HasColumnName("Status")
-                    .IsRequired();
                 table.HasOne(table => table.Restaurant).WithMany(rest => rest.TableRestaurants).OnDelete(DeleteBehavior.Cascade);                
             });
 
