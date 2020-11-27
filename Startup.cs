@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -12,6 +7,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestaurantTimBaig.Domain.DB;
 using RestaurantTimBaig.Domain.Model;
+using RestaurantTimBaig.Infrastructure;
+using RestaurantTimBaig.Infrastructure.Guarantors;
+using System;
 
 namespace RestaurantTimBaig
 {
@@ -41,14 +39,32 @@ namespace RestaurantTimBaig
             //Добавление безопасности
             services.AddControllersWithViews();
 
-            /*var serviceProvider = services.BuildServiceProvider();
+            var serviceProvider = services.BuildServiceProvider();
             var guarantor = new SeedDataGuarantor(serviceProvider);
-            guarantor.EnsureAsync();*/
+            guarantor.EnsureAsync();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            using (var scope=app.ApplicationServices.CreateScope())
+            {
+                var guarantors = scope.ServiceProvider.GetServices<IStartupPreConditionGuarantor>();
+                try
+                {
+                    Console.WriteLine("Startup guarantors started");
+                    foreach (var guarantor in guarantors)
+                        guarantor.Ensure(scope.ServiceProvider);
+
+                    Console.WriteLine("Startup guarantors executed successfuly");
+                }
+                catch (StartupPreConditionException)
+                {
+                    Console.WriteLine("Startup guarantors  failed");
+                    throw;
+                }
+
+            }
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -64,6 +80,7 @@ namespace RestaurantTimBaig
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -73,10 +90,6 @@ namespace RestaurantTimBaig
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
         }
     }
 }

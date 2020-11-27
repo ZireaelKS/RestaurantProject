@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantTimBaig.Domain.DB;
@@ -33,9 +31,9 @@ namespace RestaurantTimBaig.Controllers
             var restaurants = _restaurantDBContext.Restaurants
                 .Select(x => new RestaurantViewModel
                 {
-                    NameRest = x.RestName,
-                    AddressRest = x.RestAddress,
-                    PhoneRest = x.RestPhone,
+                    NameRest = x.RestaurantName,
+                    AddressRest = x.RestaurantAddress,
+                    PhoneRest = x.RestaurantPhone,
                 }).OrderByDescending(x => x.NameRest);
                 
             return Ok(restaurants);
@@ -52,9 +50,9 @@ namespace RestaurantTimBaig.Controllers
             var restaurants = _restaurantDBContext.Restaurants
                 .Select(x => new RestaurantViewModel
                 {
-                    NameRest = x.RestName,
-                    AddressRest = x.RestAddress,
-                    PhoneRest = x.RestPhone,
+                    NameRest = x.RestaurantName,
+                    AddressRest = x.RestaurantAddress,
+                    PhoneRest = x.RestaurantPhone,
                 }).OrderByDescending(x => x.NameRest);
 
             return Ok(idRest);
@@ -70,9 +68,9 @@ namespace RestaurantTimBaig.Controllers
         {
             var rest = new Restaurant
             {
-                RestName = data.RestName,
-                RestAddress = data.RestAddress,
-                RestPhone = data.RestPhone
+                RestaurantName = data.RestaurantName,
+                RestaurantAddress = data.RestaurantAddress,
+                RestaurantPhone = data.RestaurantPhone
             };
             _restaurantDBContext.Restaurants.Add(rest);
             _restaurantDBContext.SaveChanges();

@@ -1,43 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using RestaurantTimBaig.Domain.Model.Common;
+using System;
 
 namespace RestaurantTimBaig.Domain.Model
 {
     /// <summary>
     /// Модель данных "Бронирование"
     /// </summary>
-    public class Reservation
+    public class Reservation : Entity
     {
         /// <summary>
         /// Номер бронирования
         /// </summary>
-        public int NumberReserv { get; set; }
+        public long NumberReservation { get; set; }
 
         /// <summary>
         /// Id ресторана
         /// </summary>
-        public int IDRestReserv { get; set; }
+        public Restaurant Restaurant { get; set; }
 
         /// <summary>
         /// Id посетителя
         /// </summary>
-        public int IDVisitorReserv { get; set; }
+        public Employee Employee { get; set; }
 
         /// <summary>
         /// Номер заказанного стола
         /// </summary>
-        public int TableNumber { get; set; }
+        public TableRestaurant TableRestaurant { get; set; }
 
         /// <summary>
         /// Время бронирования
         /// </summary>
-        public DateTime TimeReserv { get; set; }
+        public DateTime TimeReservation { get; set; }
 
         /// <summary>
         /// Дата создания брони
         /// </summary>
-        public DateTime DateReserv { get; set; }
+        public DateTime DateReservation { get; set; }
     }
 }

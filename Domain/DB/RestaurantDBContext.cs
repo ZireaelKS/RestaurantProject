@@ -4,10 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using RestaurantTimBaig.Domain.Model;
 using RestaurantTimBaig.Domain.Model.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestaurantTimBaig.Domain.DB
 {
@@ -29,78 +25,151 @@ namespace RestaurantTimBaig.Domain.DB
         public override DbSet<User> Users { get; set; }
 
         /// <summary>
-        /// Сотрудники
+        /// Посетители
+        /// </summary>
+        public DbSet<Employee> Employees { get; private set; }
+
+        /// <summary>
+        /// Комментарий посетителя
+        /// </summary>
+        public DbSet<Comment> Comments { get; private set; }
+
+        /// <summary>
+        /// Ресторан
         /// </summary>
         public DbSet<Restaurant> Restaurants { get; private set; }
+
+        /// <summary>
+        /// Меню
+        /// </summary>
+        public DbSet<Dish> Dishes { get; private set; }
+
+        /// <summary>
+        /// Бронирование
+        /// </summary>
+        public DbSet<Reservation> Reservations { get; private set; }
+
+        /// <summary>
+        /// Столики ресторана
+        /// </summary>
+        public DbSet<TableRestaurant> TablesRestaurant { get; private set; }
 
         /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
+            #region User
+
             modelBuilder.Entity<User>(x =>
             {
-                x.HasOne(y => y.Restaurant)
+                x.HasOne(y => y.Employee)
                 .WithOne()
-                .HasForeignKey<User>("RestaurantId")
+                .HasForeignKey<User>("EmployeeId")
                 .IsRequired(true);
-                x.HasIndex("RestaurantId").IsUnique(true);
+                x.HasIndex("EmployeeId").IsUnique(true);
             });
 
-            #region Employee
+            #endregion 
 
-            modelBuilder.Entity<Restaurant>(b =>
+            #region Restaurant
+
+            modelBuilder.Entity<Restaurant>(rest =>
             {
-                b.ToTable("Restaurants");
-                EntityId(b);
-                b.Property(x => x.RestName)
-                    .HasColumnName("Name")
-                    .IsRequired();
-                b.Property(x => x.RestAddress)
-                    .HasColumnName("Address")
-                    .IsRequired();
-                b.Property(x => x.RestPhone)
-                    .HasColumnName("Phone")
-                    .IsRequired();
+                rest.ToTable("Restaurants");
+                rest.HasMany<Comment>(rest => rest.Comments).WithOne(com => com.Restaurant);
             });
-
-
-            /*modelBuilder.Entity<BlogPost>(b =>
-            {
-                b.ToTable("BlogPosts");
-                EntityId(b);
-                b.Property(x => x.Created)
-                    .HasColumnName("Created")
-                    .IsRequired();
-                b.Property(x => x.Title)
-                    .HasColumnName("Title")
-                    .IsRequired();
-                b.Property(x => x.Data)
-                    .HasColumnName("Data")
-                    .IsRequired();
-                b.HasOne(x => x.Owner)
-                    .WithMany()
-                    .IsRequired();
-            });*/
 
             #endregion
 
-        }
+            #region Employee
 
-        /// <summary>
-        /// Описание идентификатора сущности модели
-        /// </summary>
-        /// <typeparam name="TEntity">Тип сущности</typeparam>
-        /// <param name="builder">Построитель модели данных</param>
-        private static void EntityId<TEntity>(EntityTypeBuilder<TEntity> builder)
-            where TEntity : Entity
-        {
-            builder.Property(x => x.Id)
-                .HasColumnName("Id")
-                .IsRequired();
-            builder.HasKey(x => x.Id)
-                .HasAnnotation("Npgsql:Serial", true);
-        }
+            modelBuilder.Entity<Employee>(emp =>
+            {
+                emp.ToTable("Employees");
+                emp.Ignore(emp => emp.Fullname);
+            });
 
+            #endregion
+
+            #region Comment
+            modelBuilder.Entity<Comment>(com =>
+            {
+                com.ToTable("Comments");
+                com.HasOne(com => com.Restaurant).WithMany(rest => rest.Comments).OnDelete(DeleteBehavior.Cascade);
+                com.HasOne(com => com.Employee).WithOne();
+            });
+            
+            #endregion
+
+            #region Dish
+            modelBuilder.Entity<Dish>(dish =>
+            {
+                dish.ToTable("Dishes");
+                dish.Property(dish => dish.Restaurant)
+                    .HasColumnName("IdRestaurant")
+                    .IsRequired();
+                dish.Property(dish => dish.Type)
+                    .HasColumnName("Type")
+                    .IsRequired();
+                dish.Property(dish => dish.NameDish)
+                    .HasColumnName("NameDish")
+                    .IsRequired();
+                dish.Property(dish => dish.CookingTime)
+                    .HasColumnName("CookingTime");
+                dish.Property(dish => dish.Composition)
+                    .HasColumnName("Composition")
+                    .IsRequired();
+                /*dish.HasOne(dish => dish.Restaurant).WithMany(rest => rest.Dishes).OnDelete(DeleteBehavior.Cascade);*/
+            });
+
+            #endregion
+
+            #region Reservation
+            modelBuilder.Entity<Reservation>(reserv =>
+            {
+                reserv.ToTable("Reservations");
+                reserv.Property(reserv => reserv.NumberReservation)
+                    .HasColumnName("NumberReservation")
+                    .IsRequired();
+                reserv.Property(reserv => reserv.Restaurant)
+                    .HasColumnName("Restaurant")
+                    .IsRequired();
+                reserv.Property(reserv => reserv.Employee)
+                    .HasColumnName("Employee")
+                    .IsRequired();
+                reserv.Property(reserv => reserv.TableRestaurant)
+                    .HasColumnName("TableRestaurant")
+                    .IsRequired();
+                reserv.Property(reserv => reserv.TimeReservation)
+                    .HasColumnName("TimeReservation")
+                    .IsRequired();
+                reserv.Property(reserv => reserv.DateReservation)
+                    .HasColumnName("DateReservation")
+                    .IsRequired();
+                reserv.HasOne(reserv => reserv.Restaurant).WithMany(rest => rest.Reservations).OnDelete(DeleteBehavior.Cascade);
+                reserv.HasOne(reserv => reserv.Employee).WithMany(emp => emp.Reservations).OnDelete(DeleteBehavior.Cascade);
+            });
+
+            #endregion
+
+            #region TableRestaurant
+            modelBuilder.Entity<TableRestaurant>(table =>
+            {
+                table.ToTable("TablesRestaurant");
+                table.Property(table => table.Restaurant)
+                    .HasColumnName("IdRestaurant")
+                    .IsRequired();
+                table.Property(table => table.NumberTable)
+                    .HasColumnName("NumberTable")
+                    .IsRequired();
+                table.Property(table => table.Status)
+                    .HasColumnName("Status")
+                    .IsRequired();
+                table.HasOne(table => table.Restaurant).WithMany(rest => rest.TableRestaurants).OnDelete(DeleteBehavior.Cascade);                
+            });
+
+            #endregion
+        }
     }
 }

@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using RestaurantTimBaig.Domain.Model.Common;
+using System;
 
 namespace RestaurantTimBaig.Domain.Model
 {
     /// <summary>
     /// Модель данных "Комментарий"
     /// </summary>
-    public class Comment
+    public class Comment : Entity
     {
         /// <summary>
         /// Id ресторана
         /// </summary>
-        public int IDRest { get; set; }
+        public Restaurant Restaurant { get; set; }
 
         /// <summary>
-        /// Id посетителя
+        /// Посетитель
         /// </summary>
-        public int IDVisitor { get; set; }
+        public Employee Employee { get; set; }
 
         /// <summary>
         /// Дата создания комментария
@@ -28,7 +26,7 @@ namespace RestaurantTimBaig.Domain.Model
         /// <summary>
         /// Оценка посетителя
         /// </summary>
-        public int Point  { get; set; }
+        public long Point { get; set; }
 
         /// <summary>
         /// Содержиме комментария
