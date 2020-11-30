@@ -34,7 +34,7 @@ namespace RestaurantTimBaig.Domain.DB
         /// <summary>
         /// Пост блога
         /// </summary>
-        public DbSet<BlogPost> BlogPosts { get; private set; }
+       // public DbSet<BlogPost> BlogPosts { get; private set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace RestaurantTimBaig.Domain.DB
                     .IsRequired();
                 b.Property(x => x.Address)
                     .HasColumnName("Address");
-                b.Ignore(x => x.FullName);
+                b.Ignore(x => x.Fullname);
             });
 
             #endregion
