@@ -45,11 +45,10 @@ namespace RestaurantTimBaig.Controllers
         [HttpGet("RestaurantPage/{idRestaurant}")]
         public IActionResult RestaurantPage(long idRestaurant)
         {
-            var restaurants = _restaurantDBContext.Restaurants
+            var restaurants = _restaurantDBContext.Restaurants.Include(r => r.Dishes)
                 .Where(r => r.Id == idRestaurant)
                 .Select(r => new RestaurantViewModel
                 {
-                    Id = r.Id,
                     Name = r.RestaurantName,
                     Address = r.RestaurantAddress,
                     Phone = r.RestaurantPhone,

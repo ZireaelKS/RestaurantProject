@@ -36,6 +36,5 @@ namespace RestaurantTimBaig.Models
         /// Эл. почта ресторана
         /// </summary>
         public string Email { get; set; }
-
     }
 }
