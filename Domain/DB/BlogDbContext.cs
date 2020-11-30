@@ -1,5 +1,4 @@
-﻿using RestaurantTimBaig.Model;
-using RestaurantTimBaig.Model.Common;
+﻿
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using RestaurantTimBaig.Domain.Model;
+using RestaurantTimBaig.Domain.Model.Common;
 
 namespace RestaurantTimBaig.Domain.DB
 {
