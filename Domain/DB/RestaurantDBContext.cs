@@ -86,7 +86,7 @@ namespace RestaurantTimBaig.Domain.DB
             modelBuilder.Entity<Employee>(emp =>
             {
                 emp.ToTable("Employees");
-                emp.Ignore(emp => emp.Fullname);
+                emp.Ignore(emp => emp.FullName);
             });
 
             #endregion

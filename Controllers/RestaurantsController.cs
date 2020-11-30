@@ -44,17 +44,25 @@ namespace RestaurantTimBaig.Controllers
         [HttpGet("{idRestaurant}")]
         public IActionResult RestaurantPage(int idRestaurant)
         {
-            var restaurants = _restaurantDBContext.Restaurants
-                .Select(x => new RestaurantViewModel
+            var restaurants = _restaurantDBContext.Restaurants.Include(r => r.Dishes)
+                .Where(r => r.Id == idRestaurant)
+                .Select(r => new RestaurantViewModel
                 {
-                    Name = x.RestaurantName,
-                    Address = x.RestaurantAddress,
-                    Phone = x.RestaurantPhone,
-                    Description = x.RestaurantDescription,
-                    Email = x.RestaurantEmail
+                    Name = r.RestaurantName,
+                    Address = r.RestaurantAddress,
+                    Phone = r.RestaurantPhone,
+                    Description = r.RestaurantDescription,
+                    Email = r.RestaurantEmail
                 })
-               ;
-
+                ;
+            /*var dishes = _restaurantDBContext.Dishes.Where(d => d.Restaurant == restaurants)
+                .Select(d => new DishViewModel
+                {
+                    Type = d.Type,
+                    NameDish = d.NameDish,
+                    CookingTime = d.CookingTime,
+                    Composition = d.Composition
+                });*/
             return View(restaurants.ToList());
         }
 

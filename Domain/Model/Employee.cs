@@ -47,7 +47,7 @@ namespace RestaurantTimBaig.Domain.Model
         /// <summary>
         /// Полное имя пользователя
         /// </summary>
-        public string Fullname
+        public string FullName
         {
             get => FirstName + " " + Surname;
         }
