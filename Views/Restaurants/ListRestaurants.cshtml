@@ -1,0 +1,17 @@
+﻿@model ICollection<RestaurantViewModel>
+    @{
+        ViewData["Title"] = "Restaurants Page";
+    }
+
+<div class="text-center">
+    <h1 class="display-4">List Restaurant</h1>
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <h2> @item.Name </h2>
+            <p> @item.Address </p>
+            <p></p>
+        }
+    }
+</div>

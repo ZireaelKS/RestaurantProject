@@ -10,16 +10,27 @@ namespace RestaurantTimBaig.Models
         /// <summary>
         /// Название ресторана
         /// </summary>
-        public string NameRest { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Местонахождение ресторана
         /// </summary>
-        public string AddressRest { get; set; }
+        public string Address { get; set; }
 
         /// <summary>
         /// Номер телефона ресторана
         /// </summary>
-        public string PhoneRest { get; set; }
+        public string Phone { get; set; }
+
+        /// <summary>
+        /// Описание ресторана
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Эл. почта ресторана
+        /// </summary>
+        public string Email { get; set; }
+
     }
 }

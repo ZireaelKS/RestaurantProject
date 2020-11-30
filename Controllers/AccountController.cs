@@ -15,17 +15,17 @@ namespace RestaurantTimBaig.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly RestaurantDBContext _blogDbContext;
+        private readonly RestaurantDBContext _restaurantDbContext;
 
         /// <summary>
         /// Конструктор класса <see cref="AccountController"/>
         /// </summary>
         /// <param name="userManager">Менеджер пользователей</param>
-        /// <param name="blogDbContext">Контекст базы данных</param>
-        public AccountController(UserManager<User> userManager, RestaurantDBContext blogDbContext)
+        /// <param name="restaurantDbContext">Контекст базы данных</param>
+        public AccountController(UserManager<User> userManager, RestaurantDBContext restaurantDbContext)
         {
             _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
-            _blogDbContext = blogDbContext ?? throw new ArgumentNullException(nameof(blogDbContext));
+            _restaurantDbContext = restaurantDbContext ?? throw new ArgumentNullException(nameof(restaurantDbContext));
         }
 
         /// <summary>
@@ -130,9 +130,9 @@ namespace RestaurantTimBaig.Controllers
             }
 
             await _userManager.AddToRoleAsync(user, SecurityConstants.CustomerRole);
-            _blogDbContext.SaveChanges();
+            _restaurantDbContext.SaveChanges();
 
-            return RedirectToAction("Index", "Blog");
+            return RedirectToAction("Index", "Restaurants");
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace RestaurantTimBaig.Controllers
             await signInManager.SignOutAsync();
 
 
-            return RedirectToAction("Index", "Blog");
+            return RedirectToAction("Index", "Restaurants");
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace RestaurantTimBaig.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Blog");
+                return RedirectToAction("Index", "Restaurants");
             }
         }
 

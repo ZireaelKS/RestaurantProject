@@ -9,14 +9,13 @@ using RestaurantTimBaig.Models;
 
 namespace RestaurantTimBaig.Controllers
 {
-    [Route("[controller]")]
-    [ApiController]
-    public class RestaurantController : ControllerBase
+    [Route("{controller}")]
+    public class RestaurantsController : Controller
     {
 
         private readonly RestaurantDBContext _restaurantDBContext;
 
-        public RestaurantController(RestaurantDBContext restaurantDBContext)
+        public RestaurantsController(RestaurantDBContext restaurantDBContext)
         {
             _restaurantDBContext = restaurantDBContext ?? throw new ArgumentNullException(nameof(restaurantDBContext));
         }
@@ -25,37 +24,38 @@ namespace RestaurantTimBaig.Controllers
         /// Вывод списка ресторанов
         /// </summary>
         /// <returns></returns>
-        ///[HttpGet]
-        public IActionResult Get()
+        [HttpGet]
+        public IActionResult ListRestaurants()
         {
             var restaurants = _restaurantDBContext.Restaurants
                 .Select(x => new RestaurantViewModel
                 {
-                    NameRest = x.RestaurantName,
-                    AddressRest = x.RestaurantAddress,
-                    PhoneRest = x.RestaurantPhone,
-                }).OrderByDescending(x => x.NameRest);
-                
-            return Ok(restaurants);
+                    Name = x.RestaurantName,
+                    Address = x.RestaurantAddress
+                }).OrderByDescending(x => x.Name);               
+            return View(restaurants.ToList());
         }
 
         /// <summary>
-        /// Вывод ресторана по id (пока не юзабельно)
+        /// Вывод ресторана по id
         /// </summary>
-        /// <param name="idRest"></param>
+        /// <param name="idRestaurant"></param>
         /// <returns></returns>
-        [HttpGet("{idRest}")]
-        public IActionResult GetRest(int idRest)
+        [HttpGet("{idRestaurant}")]
+        public IActionResult RestaurantPage(int idRestaurant)
         {
             var restaurants = _restaurantDBContext.Restaurants
                 .Select(x => new RestaurantViewModel
                 {
-                    NameRest = x.RestaurantName,
-                    AddressRest = x.RestaurantAddress,
-                    PhoneRest = x.RestaurantPhone,
-                }).OrderByDescending(x => x.NameRest);
+                    Name = x.RestaurantName,
+                    Address = x.RestaurantAddress,
+                    Phone = x.RestaurantPhone,
+                    Description = x.RestaurantDescription,
+                    Email = x.RestaurantEmail
+                })
+               ;
 
-            return Ok(idRest);
+            return View(restaurants.ToList());
         }
 
         /// <summary>

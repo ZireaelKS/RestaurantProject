@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace blogTimofeeva.Exceptions.Http
+namespace RestaurantTimBaig.Exceptions.Http
 {
     /// <summary>
     /// Ошибка авторизации (код 401)

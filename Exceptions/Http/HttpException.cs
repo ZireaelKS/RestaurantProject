@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace blogTimofeeva.Exceptions.Http
+namespace RestaurantTimBaig.Exceptions.Http
 {
     /// <summary>
     /// Ошибка, соответствующая ошибке протокола HTTP

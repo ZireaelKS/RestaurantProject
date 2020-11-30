@@ -1,4 +1,4 @@
-﻿using blogTimofeeva.Exceptions.Http;
+﻿using RestaurantTimBaig.Exceptions.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
