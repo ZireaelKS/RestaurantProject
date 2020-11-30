@@ -27,7 +27,7 @@ namespace RestaurantTimBaig
         {
             services.AddControllersWithViews();
             services.AddDbContext<RestaurantDBContext>(options =>
-                options.UseNpgsql("Username=ksenia; Database=RestaurantTimBaig; Password=ksenia; Host=localhost"));
+                options.UseNpgsql("Username=postgres; Database=RestaurantTimBaig; Password=Stellka1; Host=localhost"));
             services.AddIdentity<User, IdentityRole<int>>(options =>
             {
                 options.Password.RequireLowercase = false;
