@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantTimBaig.Domain.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,5 +37,10 @@ namespace RestaurantTimBaig.Models
         /// Эл. почта ресторана
         /// </summary>
         public string Email { get; set; }
+
+        /// <summary>
+        /// Тип блюда
+        /// </summary>
+        public ICollection<Dish> Dish { get; set; }
     }
 }

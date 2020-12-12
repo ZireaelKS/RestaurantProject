@@ -31,24 +31,17 @@
 
     <div class="container text-center">
 
-        <div class="text-center">
-            @if (Model != null)
-            {
-                @foreach (var item in Model)
-                {
-                    <h1>@item.Name</h1>
-                    <p> @item.Address </p>
-                    <p> @item.Description </p>
-                    <p> @item.Email </p>
-                    <p> @item.Phone </p>
-                    <p></p>
-                }
-            }
-        </div>
-
-    </div>
-
-</body>
-
-
-
+<div class="text-center">
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <h1 class="display-4">@item.Name</h1>
+            <p> @item.Address </p>
+            <p> @item.Description </p>
+            <p> @item.Email </p>
+            <p> @item.Phone </p>
+            <p></p>
+        }
+    }
+</div>
