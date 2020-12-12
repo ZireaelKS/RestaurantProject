@@ -58,6 +58,8 @@ namespace RestaurantTimBaig.Controllers
             return View(restaurants.ToList());
         }
 
+
+
         /// <summary>
         /// Добавление нового ресторана
         /// </summary>
@@ -111,5 +113,7 @@ namespace RestaurantTimBaig.Controllers
             _restaurantDBContext.SaveChanges();
             return Ok();
         }
+
+  
     }
 }
