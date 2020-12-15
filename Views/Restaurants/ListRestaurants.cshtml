@@ -16,7 +16,7 @@
 
 <style>
     body {
-      background: #ae4b04
+      background: #fef7af
     }
 
     .stroke {
@@ -39,7 +39,7 @@
             {
                 @foreach (var item in Model)
                 {
-                    <a class="text-white-50" asp-controller="Restaurants" asp-action="RestaurantPage">@item.Name</a>
+                    <a href="/Restaurants/RestaurantPage/@item.Id"><h2>@item.Name</h2></a>
                     <p> @item.Address </p>
                     <p></p>
                 }

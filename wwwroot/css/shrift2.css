@@ -1,0 +1,21 @@
+H2 {
+  text-shadow:
+    -1px -1px #FFF,
+    -2px -2px #FFF,
+    -1px 1px #FFF,
+    -2px 2px #FFF,
+    1px 1px #FFF,
+    2px 2px #FFF,
+    1px -1px #FFF,
+    2px -2px #FFF,
+    -3px -3px 2px #BBB,
+    -3px 3px 2px #BBB,
+    3px 3px 2px #BBB,
+    3px -3px 2px #BBB;
+  color: steelblue;
+  transition: all 1s;
+}
+
+H2:hover {
+  color: yellowgreen;
+}

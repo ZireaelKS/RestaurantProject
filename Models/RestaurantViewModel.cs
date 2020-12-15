@@ -2,11 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RestaurantTimBaig.Domain.Model;
 
 namespace RestaurantTimBaig.Models
 {
     public class RestaurantViewModel
     {
+        /// <summary>
+        /// Номер ресторана
+        /// </summary>
+        public long Id { get; set; }
         /// <summary>
         /// Название ресторана
         /// </summary>

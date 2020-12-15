@@ -30,6 +30,7 @@ namespace RestaurantTimBaig.Controllers
             var restaurants = _restaurantDBContext.Restaurants
                 .Select(x => new RestaurantViewModel
                 {
+                    Id = x.Id,
                     Name = x.RestaurantName,
                     Address = x.RestaurantAddress
                 }).OrderByDescending(x => x.Name);               
@@ -41,24 +42,31 @@ namespace RestaurantTimBaig.Controllers
         /// </summary>
         /// <param name="idRestaurant"></param>
         /// <returns></returns>
-        [HttpGet("{idRestaurant}")]
-        public IActionResult RestaurantPage(int idRestaurant)
+        [HttpGet("RestaurantPage/{idRestaurant}")]
+        public IActionResult RestaurantPage(long idRestaurant)
         {
             var restaurants = _restaurantDBContext.Restaurants
-                .Select(x => new RestaurantViewModel
+                .Where(r => r.Id == idRestaurant)
+                .Select(r => new RestaurantViewModel
                 {
-                    Name = x.RestaurantName,
-                    Address = x.RestaurantAddress,
-                    Phone = x.RestaurantPhone,
-                    Description = x.RestaurantDescription,
-                    Email = x.RestaurantEmail
+                    Id = r.Id,
+                    Name = r.RestaurantName,
+                    Address = r.RestaurantAddress,
+                    Phone = r.RestaurantPhone,
+                    Description = r.RestaurantDescription,
+                    Email = r.RestaurantEmail
                 })
-               ;
-
+                ;
+            /*var dishes = _restaurantDBContext.Dishes.Where(d => d.Restaurant == restaurants)
+                .Select(d => new DishViewModel
+                {
+                    Type = d.Type,
+                    NameDish = d.NameDish,
+                    CookingTime = d.CookingTime,
+                    Composition = d.Composition
+                });*/
             return View(restaurants.ToList());
         }
-
-
 
         /// <summary>
         /// Добавление нового ресторана
@@ -113,7 +121,5 @@ namespace RestaurantTimBaig.Controllers
             _restaurantDBContext.SaveChanges();
             return Ok();
         }
-
-  
     }
 }
