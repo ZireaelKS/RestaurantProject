@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RestaurantTimBaig.Domain.DB;
 using RestaurantTimBaig.Domain.Model;
+using RestaurantTimBaig.Models;
 using RestaurantTimBaig.Security;
+using RestaurantTimBaig.Security.Extensions;
 using RestaurantTimBaig.ViewModels.Account;
 
 namespace RestaurantTimBaig.Controllers
@@ -143,9 +146,34 @@ namespace RestaurantTimBaig.Controllers
         public async Task<IActionResult> Logout([FromServices] SignInManager<User> signInManager)
         {
             await signInManager.SignOutAsync();
-
-
             return RedirectToAction("Index", "Restaurants");
+        }
+
+        /// <summary>
+        /// Личный кабинет
+        /// </summary>
+        /// <param name="signInManager">Менеджер авторизации</param>
+        [HttpGet]
+        public IActionResult UserPersonalAccount()
+        {
+            var user = this.GetAuthorizedUser();
+            var employee = _restaurantDbContext.Employees               
+                .Include(x => x.Comments).ThenInclude(r => r.Restaurant)
+                .Include(x => x.Reservations).ThenInclude(t => t.TableRestaurant).ThenInclude(r => r.Restaurant)
+                .Where(x => x.Id == user.Employee.Id)
+                .Select(x => new UserAccountViewModel
+                {
+                    FirstName = x.FirstName,
+                    Surname = x.Surname,
+                    Address = x.Address,
+                    DateOfBirth =  x.DateOfBirth,
+                    City = x.City,
+                    Phone = x.Phone,
+                    Email = x.Email,
+                    Comments = x.Comments,
+                    Reservations = x.Reservations
+                });
+            return View(employee.ToList());
         }
 
         /// <summary>
