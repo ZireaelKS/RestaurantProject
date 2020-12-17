@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RestaurantTimBaig.Domain.DB;
+using RestaurantTimBaig.Domain.Model;
 using RestaurantTimBaig.Domain.Model.Common;
 using RestaurantTimBaig.Models;
+using RestaurantTimBaig.Security.Extensions;
+using RestaurantTimBaig.ViewModels.Restaurants;
 
 namespace RestaurantTimBaig.Controllers
 {
@@ -45,80 +49,59 @@ namespace RestaurantTimBaig.Controllers
         [HttpGet("RestaurantPage/{idRestaurant}")]
         public IActionResult RestaurantPage(long idRestaurant)
         {
-            var restaurants = _restaurantDBContext.Restaurants.Include(r => r.Dishes).ToList()
+            var restaurants = _restaurantDBContext.Restaurants.Include(r => r.Dishes)
+                .Include(x => x.TableRestaurants)
+                .Include(r => r.Comments)
+                .ThenInclude(x => x.Employee)
                 .Where(r => r.Id == idRestaurant)
                 .Select(r => new RestaurantViewModel
                 {
+                    Id = r.Id,
                     Name = r.RestaurantName,
                     Address = r.RestaurantAddress,
                     Phone = r.RestaurantPhone,
                     Description = r.RestaurantDescription,
-                    Email = r.RestaurantEmail
-                })
-                ;
-            /*var dishes = _restaurantDBContext.Dishes.Where(d => d.Restaurant == restaurants)
-                .Select(d => new DishViewModel
-                {
-                    Type = d.Type,
-                    NameDish = d.NameDish,
-                    CookingTime = d.CookingTime,
-                    Composition = d.Composition
-                });*/
-            return View(restaurants.ToList());
+                    Email = r.RestaurantEmail,
+                    Dishes = r.Dishes,
+                    TableRestaurants = r.TableRestaurants,  
+                    Comments = r.Comments,
+                }).FirstOrDefault();
+            return View(restaurants);
         }
 
         /// <summary>
-        /// Добавление нового ресторана
+        /// Добавления оценки ресторана пользователем
         /// </summary>
-        /// <param name="newRest"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult AddRestaurant(Restaurant data)
+        [HttpGet("AddComment/{idRestaurant}")]
+        public IActionResult AddComment(long idRestaurant)
         {
-            var rest = new Restaurant
+            return View(new NewCommentViewModel()
             {
-                RestaurantName = data.RestaurantName,
-                RestaurantAddress = data.RestaurantAddress,
-                RestaurantPhone = data.RestaurantPhone
+                IdRestaurant = idRestaurant
+            });
+        }
+
+        [HttpPost("AddCommentRestaurant")]
+        public IActionResult AddCommentRestaurant(NewCommentViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var user = this.GetAuthorizedUser();
+
+            var comment = new Comment
+            {
+                Restaurant = _restaurantDBContext.Restaurants.Where(r => r.Id == model.IdRestaurant).FirstOrDefault(),
+                Employee = user.Employee,
+                DateComment = DateTime.Now,
+                Point = model.Point,
+                DataComment = model.DataComment,
             };
-            _restaurantDBContext.Restaurants.Add(rest);
+
+            _restaurantDBContext.Comments.Add(comment);
             _restaurantDBContext.SaveChanges();
-            return Ok();
-        }
 
-
-        /// <summary>
-        /// Удаление ресторана из списка
-        /// </summary>
-        /// <param name="id">Идентификатор ресторана</param>
-        [HttpDelete("{id}/delete")]
-        public IActionResult DeleteRestaurant(int id)
-        {
-            Restaurant rest = _restaurantDBContext.Restaurants.Find(id);
-            try
-            {
-                _restaurantDBContext.Remove(rest);
-                _restaurantDBContext.SaveChanges();
-            }
-            catch
-            {
-                return NotFound();
-            }
-
-            return Ok();
-        }
-
-        /// <summary>
-        /// Изменение данных ресторана (не работает, пока)
-        /// </summary>
-        /// <param name="rest"></param>
-        /// <returns></returns>
-        [HttpPost("updata")]
-        public ActionResult EditBook(Restaurant rest)
-        {
-            _restaurantDBContext.Entry(rest).State = EntityState.Modified;
-            _restaurantDBContext.SaveChanges();
-            return Ok();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
