@@ -177,6 +177,11 @@ namespace RestaurantTimBaig.Controllers
             return View();
         }
 
+        public IActionResult AccountUser()
+        {
+            return View();
+        }
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)
