@@ -41,7 +41,8 @@
             }
             @if (SignInManager.IsSignedIn(User))
             {
-                    <a href="/Restaurants/AddComment/@item.Id"><h1>Оставить отзыв</h1></a>
+                <a href="/Restaurants/AddComment/@item.Id"><h1>Оставить отзыв</h1></a>
+                <a href="/Restaurants/AddReserve/@item.Id"><h1>Забронировать столик</h1></a>
             }
         }
     </div>

@@ -13,6 +13,7 @@
             <input asp-for="Point" class="form-control">
             <span asp-validation-for="Point" class="text-danger"></span>
         </div>
+        <input asp-for="IdRestaurant" type="hidden" value="@ViewBag.id" />
         <div class="form-group bmd-form-group">
             <label for="exampleFormControlTextarea1">Комментарий</label>
             <textarea asp-for="DataComment" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
