@@ -30,5 +30,6 @@ namespace RestaurantTimBaig.ViewModels.Restaurants
         [Required]
         [Display(Name = "Текст комментария")]
         public string DataComment { get; set; }
+
     }
 }

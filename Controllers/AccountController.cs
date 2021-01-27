@@ -135,7 +135,7 @@ namespace RestaurantTimBaig.Controllers
             await _userManager.AddToRoleAsync(user, SecurityConstants.CustomerRole);
             _restaurantDbContext.SaveChanges();
 
-            return RedirectToAction("Index", "Restaurants");
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace RestaurantTimBaig.Controllers
         public async Task<IActionResult> Logout([FromServices] SignInManager<User> signInManager)
         {
             await signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Restaurants");
+            return RedirectToAction("Index", "Home");
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace RestaurantTimBaig.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Restaurants");
+                return RedirectToAction("Index", "Home");
             }
         }
 

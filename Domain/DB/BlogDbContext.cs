@@ -64,7 +64,7 @@ namespace RestaurantTimBaig.Domain.DB
                     .IsRequired();
                 b.Property(x => x.Address)
                     .HasColumnName("Address");
-                b.Ignore(x => x.Fullname);
+                b.Ignore(x => x.FullName);
             });
 
             #endregion

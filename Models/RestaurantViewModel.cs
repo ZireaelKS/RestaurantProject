@@ -49,7 +49,7 @@ namespace RestaurantTimBaig.Models
         public ICollection<TableRestaurant> TableRestaurants { get; set; }
 
         /// <summary>
-        /// Столы
+        /// Комментарии
         /// </summary>
         public ICollection<Comment> Comments { get; set; }
 
@@ -57,5 +57,7 @@ namespace RestaurantTimBaig.Models
         /// Пользователи
         /// </summary>
         public ICollection<Employee> Employees { get; set; }
+
+
     }
 }

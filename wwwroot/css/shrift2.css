@@ -1,21 +1,8 @@
-H2 {
-  text-shadow:
-    -1px -1px #FFF,
-    -2px -2px #FFF,
-    -1px 1px #FFF,
-    -2px 2px #FFF,
-    1px 1px #FFF,
-    2px 2px #FFF,
-    1px -1px #FFF,
-    2px -2px #FFF,
-    -3px -3px 2px #BBB,
-    -3px 3px 2px #BBB,
-    3px 3px 2px #BBB,
-    3px -3px 2px #BBB;
-  color: steelblue;
-  transition: all 1s;
-}
-
-H2:hover {
-  color: yellowgreen;
+h2 {
+    font-family: 'Kholodos';
+    color: #5a6ad0;
+    text-align: center;
+    src: url('C:\Users\20029.ttf');
+    font-size: 3cm;
+    font-style: normal;
 }

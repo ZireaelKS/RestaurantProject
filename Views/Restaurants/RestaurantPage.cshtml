@@ -15,6 +15,7 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 <link rel="stylesheet" type="text/css" href="~/css/shrift1.css">
+<link rel="stylesheet" type="text/css" href="~/css/shrift2.css">
 
 
 <style>
@@ -29,47 +30,73 @@
 
 <title>Платформа ресторанов</title>
 
-<body>
 
-    <div class="container text-center">
+    <form asp-action="AddComment" method="get">
+        <div class="text-center">
+            @if (Model != null)
+            {
+                var item = Model;
 
-<form asp-action="AddComment" method="get">
-    <div class="text-center">
-        @if (Model != null)
-        {
-            var item = Model;
-            <h1 class="display-4">@item.Name</h1>
-            <p> @item.Address </p>
-            <p> @item.Description </p>
-            <p> @item.Email </p>
-            <p> @item.Phone </p>
-            <p></p>
-            <h1>Меню</h1>
-            @foreach (var d in @item.Dishes)
-            {
-                <h2>@d.NameDish </h2>
-                <p>@d.Type </p>
-                <p>@d.Composition </p>
-                <p>@d.CookingTime </p>
-            }
-            <h1>Столики</h1>
-            @foreach (var t in @item.TableRestaurants)
-            {
-                <h2>@t.NumberTable </h2>
-                <p>@t.Status </p>
-            }
-            <h1>Комментарии</h1>
-            @foreach (var e in @item.Comments)
-            {
-                <p>@e.Employee.FullName </p>
-                <p>@e.DateComment </p>
-                <p>@e.Point </p>
-                <p>@e.DataComment </p>
-            }
-            @if (SignInManager.IsSignedIn(User))
-            {
-                    <a href="/Restaurants/AddComment/@item.Id"><h1>Оставить отзыв</h1></a>
-            }
-        }
-    </div>
+                <h1 class="display-4">@item.Name</h1>
+                <p class="font-italic"> Адрес: @item.Address </p>
+                <p class="font-italic"> Описание: @item.Description </p>
+                <p class="font-italic"> Email:@item.Email </p>
+                <p class="font-italic"> Телефон: @item.Phone </p>
+                <p></p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class = "display-4">Меню</h2>
+                        @foreach (var d in @item.Dishes)
+                        {
+                            <h4>Название: @d.NameDish </h4>
+                            <p>Описание: @d.Composition </p>
+                            <p>Время готовки: @d.CookingTime </p>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="display-4">Столики</h2>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var d in @item.TableRestaurants)
+                                {
+                                    <tr>
+                                        
+                                        <td>
+                                            <h5>@d.NumberTable </h5>
+
+                                        </td>
+                                        <td><p>@d.Status </p></td>
+
+                                    </tr>
+                                   }
+                            </tbody>
+                        </table>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h2 class="text-right, display-4">Комментарии</h2>
+                            @foreach (var e in @item.Comments)
+                            {
+                                <p class="text-right">Имя: @e.Employee.FullName </p>
+                                <p class="text-right">Дата отзыва: @e.DateComment </p>
+                                <p class="text-right">Оценка: @e.Point </p>
+                                <p class="text-right">@e.DataComment </p>
+                            }
+                            
+                        </div>
+                        <div class="col-md-6">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <a href="/Restaurants/AddComment/@item.Id"><h2 class="display-4">Оставить отзыв</h2></a>
+                            }
+                        </div>
+                    </div>
+                    }
+
+                </div>
 </form>

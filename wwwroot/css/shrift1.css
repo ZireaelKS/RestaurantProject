@@ -1,18 +1,8 @@
-H1 {
-
-font-family: 'mr_KindlyJasmineG';
-
-color: #ffbcdb;
-
-text-align: center;
-
-src: url('C:\Users\Liza\Downloads\Web-programming\web\font\19516.otf');
-
-
-font-size: 4cm;
-
-font-style: italic;
-
-
-
+h1 {
+    font-family: 'Kholodos';
+    color: #5a6ad0;
+    text-align: center;
+    src: url('C:\Users\20029.ttf');
+    font-size: 4cm;
+    font-style: italic;
 }
