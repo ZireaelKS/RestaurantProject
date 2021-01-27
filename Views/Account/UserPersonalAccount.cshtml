@@ -31,56 +31,56 @@
 
     <div class="container text-center">
 
-            <div class="text-center">
-                @if (Model != null)
-                {
-                    @foreach (var item in Model)
-                    {
-                        <h1 class="display-4">@item.FullName</h1>
+<div class="text-center">
+    @if (Model != null)
+    {
+        @foreach (var item in Model)
+        {
+            <h1 class="display-4">@item.FullName</h1>
                         
-                        <p></p>
+            <p></p>
                         <div class="row">
                             <div class="col-md-6">
                                 <h2 class="text-left, display-4">Мои отзывы</h2>
-                                @if (item.Comments.Count != 0)
-                                {
-                                    @foreach (var c in @item.Comments)
-                                    {
+            @if (item.Comments.Count != 0)
+            {
+                @foreach (var c in @item.Comments)
+                {
                                         <h5 class="text-left">Ресторан @c.Restaurant.RestaurantName </h5>
                                         <p class="text-left">Дата отзыва: @c.DateComment </p>
                                         <p class="text-left">Оценка: @c.Point </p>
                                         <p class="text-left">Комментарий: @c.DataComment</p>
-                                    }
-                                }
-                                else
-                                {
+                }
+            }
+            else
+            {
                                     <p class="text-left">Вы пока не оставили ни одного отзыва</p>
-                                }
+            }
                             </div>
                             <div class="col-md-6">
                                 <h2 class="text-md-right, display-4">Бронирование</h2>
-                                @if (item.Reservations.Count != 0)
-                                {
-                                    @foreach (var r in @item.Reservations)
-                                    {
+            @if (item.Reservations.Count != 0)
+            {
+                @foreach (var r in @item.Reservations)
+                {
                                         <h5 class="text-md-right">@r.Restaurant.RestaurantName </h5>
                                         <p class="text-md-right">@r.NumberReservation </p>
                                         <p class="text-md-right">Дата создания брони @r.DateReservation </p>
                                         <p class="text-md-right">Время брони @r.TimeReservation</p>
                                         <p class="text-md-right">Столик № @r.TableRestaurant.NumberTable</p>
-                                    }
-                                }
-                                else
-                                {
+                }
+            }
+            else
+            {
                                     <p class="text-md-right">Вы пока не забронировали ни одного столика</p>
-                                }
+            }
                             </div>
 
                         </div>
 
                             
-                            }
-                            }
-                 </div>
+        }
+    }
+</div>
         </div>
 </body>

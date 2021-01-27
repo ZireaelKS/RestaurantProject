@@ -1,0 +1,30 @@
+﻿@model RestaurantTimBaig.ViewModels.Restaurants.NewReservationViewModel
+@{
+    ViewData["Title"] = "Бронирование";
+    Layout = "_LoginLayout";
+}
+
+<form asp-controller="Restaurants" asp-action="AddReservationRestaurant" method="post">
+    <div class="card-body">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div calss="form-group bmd-form-group">
+            <label for="exampleFormControlTextarea1">Дата</label>
+            <input asp-for="TimeReservation" class="form-control" type="date" />
+        </div>
+        <input asp-for="IdRestaurant" type="hidden" value="@ViewBag.id" />
+        <div calss="form-group bmd-form-group">
+            <select id="NumberTableRestaurant" name="NumberTableRestaurant" class="btn btn-light dropdown-toggle">
+                <option class="dropdown-item" value="1">1</option>
+                <option class="dropdown-item" value="2">2</option>
+                <option class="dropdown-item" value="3">3</option>
+                <option class="dropdown-item" value="4">4</option>
+            </select>
+        </div>
+
+        <p></p>
+
+        <button type="submit">Добавить</button>
+
+    </div>
+</form>

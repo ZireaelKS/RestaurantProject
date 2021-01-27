@@ -10,9 +10,10 @@ namespace RestaurantTimBaig.Models
     public class RestaurantViewModel
     {
         /// <summary>
-        /// Номер ресторана
+        /// ID ресторана
         /// </summary>
         public long Id { get; set; }
+
         /// <summary>
         /// Название ресторана
         /// </summary>
@@ -49,7 +50,7 @@ namespace RestaurantTimBaig.Models
         public ICollection<TableRestaurant> TableRestaurants { get; set; }
 
         /// <summary>
-        /// Комментарии
+        /// Столы
         /// </summary>
         public ICollection<Comment> Comments { get; set; }
 
@@ -57,7 +58,5 @@ namespace RestaurantTimBaig.Models
         /// Пользователи
         /// </summary>
         public ICollection<Employee> Employees { get; set; }
-
-
     }
 }
