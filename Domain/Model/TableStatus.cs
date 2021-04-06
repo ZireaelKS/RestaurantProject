@@ -10,7 +10,7 @@ namespace RestaurantTimBaig.Domain.Model
     /// </summary>
     public enum TableStatus
     {
-        Open,
-        Close
+        Свободный,
+        Занят
     }
 }

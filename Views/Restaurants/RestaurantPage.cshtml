@@ -40,7 +40,7 @@
                 <h1 class="display-4">@item.Name</h1>
                 <p class="font-italic"> Адрес: @item.Address </p>
                 <p class="font-italic"> Описание: @item.Description </p>
-                <p class="font-italic"> Email:@item.Email </p>
+                <p class="font-italic"> Email: @item.Email </p>
                 <p class="font-italic"> Телефон: @item.Phone </p>
                 <p></p>
                 <div class="row">
@@ -50,7 +50,7 @@
                         {
                             <h4>Название: @d.NameDish </h4>
                             <p>Описание: @d.Composition </p>
-                            <p>Время готовки: @d.CookingTime </p>
+                            <p>Время готовки: @d.CookingTime минут</p>
                         }
                     </div>
                     <div class="col-md-6">
@@ -93,7 +93,8 @@
                             @if (SignInManager.IsSignedIn(User))
                             {
                                 <a href="/Restaurants/AddComment/@item.Id"><h2 class="display-4">Оставить отзыв</h2></a>
-                            }
+                                <a href="/Restaurants/AddReserve/@item.Id"><h2 class="display-4">Забронировать столик</h2></a>
+                                                }
                         </div>
                     </div>
                     }
