@@ -1,9 +1,7 @@
-﻿
+﻿@model ICollection<RestaurantViewModel>
 @{
-    ViewData["Title"] = "Главная страница";
+    ViewData["Title"] = "Список ресторанов";
 }
-@inject SignInManager<User> SignInManager
-@inject UserManager<User> UserManager
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,43 +14,40 @@
 <link rel="stylesheet" type="text/css" href="~/css/shrift1.css">
 
 
+<style>
+    body {
+      background: #fef7af
+    }
+
+    .stroke {
+        text-shadow: black 3px 3px 0, black -3px -3px 0, black -3px 3px 0, black 3px -3px 0;
+    }
+</style>
+
 <title>Платформа ресторанов</title>
 
 <body>
 
     <div class="container text-center">
-        <h1 class="stroke">Добро пожаловать</h1>
 
-        <p></p>
+        <div class="text-center">
 
-        <div class="row">
-
-            <div class="col-md">
-                <h2><a class="table-light" asp-controller="Restaurants" asp-action="ListRestaurants">Рестораны</a></h2>
-            </div>
-
-            <div class="col-md">
-                @if (SignInManager.IsSignedIn(User))
+            <!--
+    <h2><a class="text-white-50" asp-controller="Restaurants" asp-action="RestaurantPage">Первый ресторан</a></h2>
+       -->
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
                 {
-                    <div class="col-md">
-                        <h2><a class="table-light" asp-controller="Account" asp-action="UserPersonalAccount">Личный кабинет</a></h2>
-                    </div>
+                    <a href="/Restaurants/RestaurantPage/@item.Id"><h2 class="display-4">@item.Name</h2></a>
+                    <p> @item.Address </p>
+                    <p></p>
                 }
-
-                @if (SignInManager.IsSignedIn(User) == false)
-                { 
-                    <div class="col-md">
-                        <h2><a class="table-light" asp-controller="Account" asp-action="Login">Вход</a></h2>
-                    </div>
-                }
-
-            </div>
-
-
-
-
+            }
         </div>
 
     </div>
 
 </body>
+
+

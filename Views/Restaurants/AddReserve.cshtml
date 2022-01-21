@@ -1,0 +1,51 @@
+﻿@model RestaurantTimBaig.ViewModels.Restaurants.NewReservationViewModel
+@{
+    ViewData["Title"] = "Бронирование";
+    Layout = "_LoginLayout";
+}
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="lib\lightbox2-dev\dist\js\lightbox.js"></script>
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="~/css/shrift1.css">
+
+
+<style>
+    body {
+        background: #fef7af
+    }
+
+    .stroke {
+        text-shadow: black 3px 3px 0, black -3px -3px 0, black -3px 3px 0, black 3px -3px 0;
+    }
+</style>
+
+<form asp-controller="Restaurants" asp-action="AddReservationRestaurant" method="post">
+    <div class="card-body">
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <div calss="form-group bmd-form-group">
+            <label for="exampleFormControlTextarea1">Дата</label>
+            <input asp-for="TimeReservation" class="form-control" type="date" />
+        </div>
+        <input asp-for="IdRestaurant" type="hidden" value="@ViewBag.id" />
+        <div calss="form-group bmd-form-group">
+            <select id="NumberTableRestaurant" name="NumberTableRestaurant" class="btn btn-light dropdown-toggle">
+                <option class="dropdown-item" value="1">1</option>
+                <option class="dropdown-item" value="2">2</option>
+                <option class="dropdown-item" value="3">3</option>
+                <option class="dropdown-item" value="4">4</option>
+            </select>
+        </div>
+
+        <p></p>
+
+        <button type="submit">Добавить</button>
+
+    </div>
+</form>
