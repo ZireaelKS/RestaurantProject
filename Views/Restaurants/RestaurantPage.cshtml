@@ -1,6 +1,6 @@
-﻿
+﻿@model ICollection<RestaurantViewModel>
 @{
-    ViewData["Title"] = "Главная страница";
+    ViewData["Title"] = "Ресторан";
 }
 
 <meta charset="utf-8">
@@ -15,11 +15,9 @@
 
 
 <style>
-    /*body {
-        /*background: #de3737*/
-    /*url("images/abstract-blur-and-defocused-restaurant_74190-6908.jpg") no-repeat;*/
-    /*background-size: cover;*/
-    }*/ 
+    body {
+        background: #fef7af
+    }
 
     .stroke {
         text-shadow: black 3px 3px 0, black -3px -3px 0, black -3px 3px 0, black 3px -3px 0;
@@ -31,27 +29,25 @@
 <body>
 
     <div class="container text-center">
-        <h1 class="stroke">Добро пожаловать</h1>
-       
-        <p></p>
 
-        <div class="row">
-
-            <div class="col-md">
-                <h2><a class="table-light" asp-controller="Restaurants" asp-action="ListRestaurants">Рестораны</a></h2>
-            </div>
-
-            <div class="col-md"></div>
-
-             <div class="col-md">
-                 <h2><a class="table-light" asp-controller="Account" asp-action="Login">Вход</a></h2>
-             </div>
-
-
-
-
-            </div>
-
+        <div class="text-center">
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
+                    <h1>@item.Name</h1>
+                    <p> @item.Address </p>
+                    <p> @item.Description </p>
+                    <p> @item.Email </p>
+                    <p> @item.Phone </p>
+                    <p></p>
+                }
+            }
         </div>
 
+    </div>
+
 </body>
+
+
+

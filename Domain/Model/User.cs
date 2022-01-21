@@ -1,0 +1,22 @@
+﻿using Microsoft.AspNetCore.Identity;
+using RestaurantTimBaig.Domain.Model.Common;
+
+namespace RestaurantTimBaig.Domain.Model
+{
+    /// <summary>
+    /// User
+    /// </summary>
+    public class User : IdentityUser<int>
+    {
+        /// <summary>
+        /// Ресторан
+        /// </summary>
+        /*public Restaurant Restaurant { get; set; }*/
+
+        /// <summary>
+        /// Посетитель
+        /// </summary>
+        public Employee Employee { get; set; }
+
+    }
+}

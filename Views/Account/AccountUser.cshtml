@@ -1,6 +1,6 @@
-﻿
+﻿@model ICollection<NewUserViewModel>
 @{
-    ViewData["Title"] = "Главная страница";
+    ViewData["Title"] = "Личный кабинет";
 }
 
 <meta charset="utf-8">
@@ -15,43 +15,44 @@
 
 
 <style>
-    /*body {
-        /*background: #de3737*/
-    /*url("images/abstract-blur-and-defocused-restaurant_74190-6908.jpg") no-repeat;*/
-    /*background-size: cover;*/
-    }*/ 
+    body {
+        background: #fef7af
+    }
 
     .stroke {
         text-shadow: black 3px 3px 0, black -3px -3px 0, black -3px 3px 0, black 3px -3px 0;
     }
 </style>
 
-<title>Платформа ресторанов</title>
+<title>Личный кабинет</title>
 
 <body>
 
     <div class="container text-center">
-        <h1 class="stroke">Добро пожаловать</h1>
-       
-        <p></p>
 
-        <div class="row">
-
-            <div class="col-md">
-                <h2><a class="table-light" asp-controller="Restaurants" asp-action="ListRestaurants">Рестораны</a></h2>
-            </div>
-
-            <div class="col-md"></div>
-
-             <div class="col-md">
-                 <h2><a class="table-light" asp-controller="Account" asp-action="Login">Вход</a></h2>
-             </div>
+        <div class="text-center">
 
 
+            @if (Model != null)
+            {
+                @foreach (var item in Model)
+                {
 
-
-            </div>
-
+                    <p>@item.UserName </p>
+                    <p></p>
+                    <p>@item.FirstName</p>
+                    <p></p>
+                    <p>@item.Surname</p>
+                    <p></p>
+                    <p>@item.Email</p>
+                    <p></p>
+                    
+                }
+            }
         </div>
 
+    </div>
+
 </body>
+
+
